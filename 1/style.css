@@ -57,8 +57,6 @@ body{
 }
 
 #game-pane .number-cell{
-	width:0;
-	height:0;
 
 	border-radius:6px;
 	background-color:#ccc0b3;

@@ -42,6 +42,7 @@ function randomOneNumber(){
 		//判断这个位置是否可用
 		if(!hasNumber(i,j)){
 			cells[i][j]= Math.random()<0.5 ? 2:4;
+			popShowCell(i,j,cells[i][j]);
 			return true;
 		}
 	}while(true);
@@ -68,7 +69,10 @@ function hasNumber(i,j){
 }
 
 function popShowCell(i,j,number){
-	$('#number-cell-'+i+'-'+j).animate({
+	$('#number-cell-'+i+'-'+j)
+	.css('background-color',getBgColor(number))
+	.css('color',getNumberColor(number))
+	.animate({
 		width:'100px',
 		height:'100px',
 		left:getLeft(j),
@@ -98,51 +102,43 @@ function changeCells(key){
 }
 
 function upAction(){
-	$('.number-cell').each(function(){
-		//向上偏移找到相同的数值就相加并且停留在把那个位置		
-		var i = getIbyId(this.id);
-		var j = getJbyId(this.id);
-		var temp = cells[i][j];
-		if(temp){
-			moveCell(i,j,temp,-1,1,0);
+	for(var i=0;i<4;i++){
+		for(var j=0;j<4;j++){
+			if(cells[i][j]){				
+				moveCell(i,j,cells[i][j],-1,1,0);	
+			}
 		}
-	});
+	}
 }
 
 function downAction(){
-	$('.number-cell').each(function(){
-		//向上偏移找到相同的数值就相加并且停留在把那个位置		
-		var i = getIbyId(this.id);
-		var j = getJbyId(this.id);
-		var temp = cells[i][j];	
-		if(temp){
-			moveCell(i,j,temp,+1,1,3);
+	for(var i=3;i>=0;i--){
+		for(var j=0;j<4;j++){
+			if(cells[i][j]){				
+				moveCell(i,j,cells[i][j],+1,1,3);	
+			}
 		}
-	});
+	}
 }
 
 function leftAction(){
-	$('.number-cell').each(function(){
-		//向上偏移找到相同的数值就相加并且停留在把那个位置		
-		var i = getIbyId(this.id);
-		var j = getJbyId(this.id);
-		var temp = cells[i][j];		
-		if(temp){
-			moveCell(i,j,temp,-1,2,0);
+	for(var j=0;j<4;j++){
+		for(var i=0;i<4;i++){
+			if(cells[i][j]){				
+				moveCell(i,j,cells[i][j],-1,2,0);
+			}
 		}
-	});
+	}
 }
 
 function rightAction(){
-	$('.number-cell').each(function(){
-		//向上偏移找到相同的数值就相加并且停留在把那个位置		
-		var i = getIbyId(this.id);
-		var j = getJbyId(this.id);
-		var temp = cells[i][j];
-		if(temp){
-			moveCell(i,j,temp,+1,2,3);
+	for(var j=3;j>=0;j--){
+		for(var i=0;i<4;i++){
+			if(cells[i][j]){				
+				moveCell(i,j,cells[i][j],+1,2,3);
+			}
 		}
-	});
+	}
 }
 
 /**
@@ -150,13 +146,17 @@ type = 1;上下type = 2;左右
 */
 function moveCell(i,j,temp,offset,type,end){
 	if(type==1){
-		while(i!=end){		
+		var addflag = false;	
+		while(i!=end){
 			i+=offset;
 			n = cells[i][j];
 			if(n){
-				if(n==temp){
-					temp += n;						
+				if( n==temp && !addflag){
+					temp += n;
+					addflag=true;
+					cells[i-offset][j]=null;
 					cells[i][j]=temp;
+					score+=temp;
 					break;	
 				}else{			
 					break;
@@ -168,15 +168,19 @@ function moveCell(i,j,temp,offset,type,end){
 			}
 		}	
 	}else if (type==2) {
+		var addflag = false;
 		while(j!=end){
 			j+=offset;
 			n = cells[i][j];
 			if(n){
-				if(n==temp){
-					temp += n;						
-					cells[i][j]=temp;
+				if( n==temp && !addflag){
+					temp += n;
+					addflag=true;	
+					cells[i][j-offset]=null;			
+					cells[i][j]=temp;	
+					score+=temp;				
 					break;	
-				}else{					
+				}else{			
 					break;
 				}
 			}else{
