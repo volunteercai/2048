@@ -196,6 +196,5 @@ function moveCell(i,j,temp,offset,type,end){
 			overFlag=true;
 			alert('游戏结束'+score);
 		}
-		overFlag=false;
 	}
 }

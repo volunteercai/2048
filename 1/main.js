@@ -31,6 +31,7 @@ function init(){
 	}
 	score = 0;
 	$('#score').text(score);
+	overFlag=false;
 }
 
 function updateNumberCells(){
