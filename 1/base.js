@@ -1,5 +1,6 @@
-var cells = new Array();
+var cells = new Array(4);
 var score = 0;
+var overFlag = false;
 
 function getLeft(j){
 	return 120*j+20+'px';
@@ -83,4 +84,106 @@ function getIbyId(id){
 
 function getJbyId(id){
 	return parseInt(id.split('-')[3]);
+}
+
+function changeCells(key){
+	//38上//40下//37左//39右
+	switch(key){
+		case 38:upAction(); break;
+		case 40:downAction(); break;
+		case 37:leftAction(); break;
+		case 39:rightAction(); break;
+		default:return;
+	}
+}
+
+function upAction(){
+	$('.number-cell').each(function(){
+		//向上偏移找到相同的数值就相加并且停留在把那个位置		
+		var i = getIbyId(this.id);
+		var j = getJbyId(this.id);
+		var temp = cells[i][j];
+		if(temp){
+			moveCell(i,j,temp,-1,1,0);
+		}
+	});
+}
+
+function downAction(){
+	$('.number-cell').each(function(){
+		//向上偏移找到相同的数值就相加并且停留在把那个位置		
+		var i = getIbyId(this.id);
+		var j = getJbyId(this.id);
+		var temp = cells[i][j];	
+		if(temp){
+			moveCell(i,j,temp,+1,1,3);
+		}
+	});
+}
+
+function leftAction(){
+	$('.number-cell').each(function(){
+		//向上偏移找到相同的数值就相加并且停留在把那个位置		
+		var i = getIbyId(this.id);
+		var j = getJbyId(this.id);
+		var temp = cells[i][j];		
+		if(temp){
+			moveCell(i,j,temp,-1,2,0);
+		}
+	});
+}
+
+function rightAction(){
+	$('.number-cell').each(function(){
+		//向上偏移找到相同的数值就相加并且停留在把那个位置		
+		var i = getIbyId(this.id);
+		var j = getJbyId(this.id);
+		var temp = cells[i][j];
+		if(temp){
+			moveCell(i,j,temp,+1,2,3);
+		}
+	});
+}
+
+/**
+type = 1;上下type = 2;左右
+*/
+function moveCell(i,j,temp,offset,type,end){
+	if(type==1){
+		while(i!=end){		
+			i+=offset;
+			n = cells[i][j];
+			if(n){
+				if(n==temp){
+					temp += n;						
+					cells[i][j]=temp;
+					break;	
+				}else{			
+					break;
+				}
+			}else{
+				cells[i-offset][j]=null;
+				cells[i][j]=temp;
+				continue;
+			}
+		}	
+	}else if (type==2) {
+		while(j!=end){
+			j+=offset;
+			n = cells[i][j];
+			if(n){
+				if(n==temp){
+					temp += n;						
+					cells[i][j]=temp;
+					break;	
+				}else{					
+					break;
+				}
+			}else{
+				cells[i][j-offset]=null;
+				cells[i][j]=temp;
+				continue;
+			}
+		}	
+	};	
 }
