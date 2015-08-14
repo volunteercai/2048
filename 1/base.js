@@ -145,8 +145,9 @@ function rightAction(){
 type = 1;上下type = 2;左右
 */
 function moveCell(i,j,temp,offset,type,end){
+	var addflag;
 	if(type==1){
-		var addflag = false;	
+		addflag = false;	
 		while(i!=end){
 			i+=offset;
 			n = cells[i][j];
@@ -168,7 +169,7 @@ function moveCell(i,j,temp,offset,type,end){
 			}
 		}	
 	}else if (type==2) {
-		var addflag = false;
+		addflag = false;
 		while(j!=end){
 			j+=offset;
 			n = cells[i][j];
@@ -189,5 +190,8 @@ function moveCell(i,j,temp,offset,type,end){
 				continue;
 			}
 		}	
-	};	
+	}
+	if(!addflag&&nospace()){
+		alert('游戏结束'+score);
+	}
 }
