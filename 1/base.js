@@ -192,6 +192,9 @@ function moveCell(i,j,temp,offset,type,end){
 		}	
 	}
 	if(!addflag&&nospace()){
-		alert('游戏结束'+score);
+		if(!overFlag){
+			overFlag=true;
+			alert('游戏结束'+score);
+		}
 	}
 }
