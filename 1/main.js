@@ -13,9 +13,9 @@ $(function(){
 			setTimeout(function(){
 				updateNumberCells();
 				randomOneNumber();
-				$('#score').text(score);
-				//return false;
+				$('#score').text(score);				
 			},40);
+			return false;
 		}
 	});
 });
