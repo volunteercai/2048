@@ -3,17 +3,19 @@ body{
 }
 #header{
 	margin:0 auto;
-	width:500px;
+	width:100%;
 	text-align:center;
 }
 
 #header h1{	
-	font-size:60px;
+	font-size:40px;
 	font-weight:bold;
+
+	left: 0px;
+	top: 0px;
 }
 
 #newGameBtn{
-	display:block;
 	margin:20px auto;
 	
 	width:100px;
@@ -30,20 +32,20 @@ body{
 }
 
 #header p{
-	font-size:25px;
+	font-size:20px;
 	margin:20px;
 }
 
 #game-pane{
-	width:460px;
-	height:460px;
-	padding:20px;
+	width: 460px;
+	height: 460px;
+	padding: 20px;
 	
-	margin:50px auto;
+	margin:0px auto;
 	background-color:#bbada0;
 	
 	border-radius:10px;
-	position:relative;
+	position: relative;
 }
 
 #game-pane .cell{
@@ -67,4 +69,34 @@ body{
 
 	position:absolute;
 }
+
+.over{
+	display: none;
+	width: 250px;
+	height:250px;
+	margin: 0 auto;
+	padding:125px 125px 125px 125px;
+	background-color:#ccc0b3;
+	text-align: center;
+	border:1px solid #666666;
+	border-radius:10px;
+	left: 0px;
+	top: 0px;
+	position: absolute;
+}
+
+.over a{
+	padding: 10px;
+	background-color:#8f7a66;
+	color:#fff;
+	font-weight: bold;
+	font-size: 17px;
+	border-radius:10px;
+	text-decoration: none;
+}
+
+.over a:hover{
+	background-color:#9f8b77;
+}
+
 

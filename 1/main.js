@@ -1,24 +1,77 @@
 $(function(){
-	for(var i=0;i<4;i++){
-		for(var j=0;j<4;j++){
-			$('#game-pane').append('<div class="cell" id="cell-'+i+'-'+j+'"></div>');
-			$('#cell-'+i+'-'+j).css('left',getLeft(j))
-							  .css('top',getTop(i));
-		}
-	}
+	preGame();
 	newGame();
 	$(document).keydown(function(event){
 		if(event.keyCode==38||event.keyCode==40||event.keyCode==37||event.keyCode==39){
-			changeCells(event.keyCode);
-			setTimeout(function(){
-				updateNumberCells();
-				randomOneNumber();
-				$('#score').text(score);				
-			},40);
+			if(!overFlag){
+				moveCells(event.keyCode);				
+			}
 			return false;
 		}
 	});
+	document.addEventListener('touchstart',function(event){
+		startX = event.touches[0].pageX;
+		startY = event.touches[0].pageY;
+	});
+	document.addEventListener('touchend',function(event){
+		endX = event.changedTouches[0].pageX;
+		endY = event.changedTouches[0].pageY;
+
+		if(Math.abs(endX-startX)>dw*0.3||Math.abs(endY-startY)>dw*0.3){
+			if(Math.abs(endX-startX)>Math.abs(endY-startY)){
+				//左右
+				if(endX-startX>0){
+					//38上//40下//37左//39右
+					//右
+					moveCells(39);		
+				}else{
+					//左
+					moveCells(37);
+				}
+			}else{
+				if(endY-startY>0){
+					//下
+					moveCells(40);
+				}else{
+					//上
+					moveCells(38);
+				}
+			}
+		}
+	});
 });
+
+function moveCells(key){
+	changeCells(key);
+	setTimeout(function(){
+		updateNumberCells();					
+	},100);
+	randomOneNumber();
+	$('#score').text(score);
+	if(nospace()&&cannotMove()){
+		overFlag = true;
+		setTimeout('showOver()',100);
+	}
+}
+
+function preGame(){
+	if(dw>=500){
+		paneWidth = 500;
+		cellPadding = 20;
+		cellWidth = 100;
+	}	
+	$('#game-pane').css({'width':paneWidth-2*cellPadding,'height':paneWidth-2*cellPadding,'padding':cellPadding});
+	for(var i=0;i<4;i++){
+		for(var j=0;j<4;j++){
+			$('#game-pane').append('<div class="cell" id="cell-'+i+'-'+j+'"></div>');
+			$('#cell-'+i+'-'+j)
+							  .css('width',cellWidth)
+							  .css('height',cellWidth)
+							  .css('left',getLeft(j))
+							  .css('top',getTop(i));
+		}
+	}
+}
 
 function newGame(){
 	init();
@@ -34,6 +87,7 @@ function init(){
 	score = 0;
 	$('#score').text(score);
 	overFlag=false;
+	$('#game-pane .over').remove();
 }
 
 function updateNumberCells(){
@@ -44,17 +98,35 @@ function updateNumberCells(){
 				var number = cells[i][j];
 				$('#game-pane').append('<div class="number-cell" id="number-cell-'+i+'-'+j+'"></div>');
 				$('#number-cell-'+i+'-'+j)
-						 .css('width','100px')
-						 .css('height','100px')
+						 .css('width',cellWidth)
+						 .css('height',cellWidth)
 						 .css('left',getLeft(j))
 						 .css('top',getTop(i))
+						 .css('line-height',cellWidth+'px')
 						 .css('background-color',getBgColor(number))
 						 .css('color',getNumberColor(number))
 						 .text(number);
-				if(number>=1024){
+				if(number>=16){
+					$('#number-cell-'+i+'-'+j).css('font-size','50px');
+				}
+				if(number>=128){
 					$('#number-cell-'+i+'-'+j).css('font-size','40px');
+				}
+				if(number>=1024){
+					$('#number-cell-'+i+'-'+j).css('font-size','30px');
+				}
+				if(number>=16384){
+					$('#number-cell-'+i+'-'+j).css('font-size','20px');
 				}
 			}
 		}
 	}
+}
+
+function isOver(){
+	if(nospace()&&cannotMove()){
+		overFlag = true;
+		return true;
+	}
+	return false;
 }
