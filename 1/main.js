@@ -77,10 +77,10 @@ function preGame(){
 }
 
 function newGame(){
-	init();
+	init();	
 	updateNumberCells();
 	randomOneNumber();
-	randomOneNumber();
+	randomOneNumber();	
 }
 
 function init(){
