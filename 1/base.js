@@ -244,8 +244,12 @@ function cannotMove(){
 
 function showOver(){
 	$('#game-pane').append('<div class="over"><p>游戏结束</p><a href="javascript:newGame();">重新开始</a><p>你的分数是:'+score+'</p></div>');
+	$('#game-pane .over').css('opacity','0.7')
+						 .css('width',paneWidth/2)
+						 .css('height',paneWidth/2)
+						 .css('padding',paneWidth/4);						 
 	setTimeout(function(){
-		$('#game-pane .over').css('opacity','0.7').fadeIn(800);
+		$('#game-pane .over').fadeIn(800);
 	},300);
 }
 
