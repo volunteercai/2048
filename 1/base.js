@@ -79,7 +79,9 @@ function popShowCell(i,j,number){
 					     .css('color',getNumberColor(number))
 					     .css('display','none')
 					     .text(number);
-	$('#number-cell-'+i+'-'+j).fadeIn(500);
+	setTimeout(function(){
+		$('#number-cell-'+i+'-'+j).fadeIn(500);
+	},50);
 }
 
 function getIbyId(id){
