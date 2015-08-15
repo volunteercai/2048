@@ -46,10 +46,10 @@ $(function(){
 
 function moveCells(key){
 	changeCells(key);
+	randomOneNumber();
 	setTimeout(function(){
 		updateNumberCells();					
-	},100);
-	randomOneNumber();
+	},100);	
 	$('#score').text(score);
 	if(nospace()&&cannotMove()){
 		overFlag = true;

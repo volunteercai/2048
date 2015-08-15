@@ -44,6 +44,7 @@ function randomOneNumber(){
 	if(nospace()){
 		return false;
 	}
+	var count = 0;	
 	do{
 		//生成两个0-3的随机数
 		var i = Math.floor(Math.random()*4);
@@ -54,7 +55,15 @@ function randomOneNumber(){
 			popShowCell(i,j,cells[i][j]);
 			return true;
 		}
-	}while(true);
+		count++;
+	}while(count!=50);
+	for(i=0;i<4;i++)
+		for(j=0;j<4;j++)
+			if(!cells[i][j]){
+				cells[i][j]=Math.random()<0.5 ? 2:4;
+				popShowCell(i,j,cells[i][j]);
+				return true;
+			}
 	return false;
 }
 
@@ -89,7 +98,7 @@ function popShowCell(i,j,number){
 					     .css('color',getNumberColor(number))
 					     .css('display','none')
 					     .text(number);
-	$('#number-cell-'+i+'-'+j).show(300);
+	$('#number-cell-'+i+'-'+j).show(90);
 }
 
 function changeCells(key){
