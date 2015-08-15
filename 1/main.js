@@ -12,6 +12,7 @@ $(function(){
 	document.addEventListener('touchstart',function(event){
 		startX = event.touches[0].pageX;
 		startY = event.touches[0].pageY;
+		return false;
 	});
 	document.addEventListener('touchend',function(event){
 		endX = event.changedTouches[0].pageX;
