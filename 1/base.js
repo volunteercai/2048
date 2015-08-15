@@ -9,6 +9,7 @@ var startX;
 var startY;
 var endX;
 var endY;
+var addflag = new Array(4);
 
 function getLeft(j){
 	return (cellWidth+cellPadding)*j+cellPadding+'px';
@@ -91,15 +92,9 @@ function popShowCell(i,j,number){
 	$('#number-cell-'+i+'-'+j).show(300);
 }
 
-function getIbyId(id){
-	return parseInt(id.split('-')[2]);
-}
-
-function getJbyId(id){
-	return parseInt(id.split('-')[3]);
-}
-
 function changeCells(key){
+	for(var i=0;i<4;i++)
+		addflag[i] = new Array(4);
 	//38上//40下//37左//39右
 	switch(key){
 		case 38:upAction(); break;
@@ -111,7 +106,7 @@ function changeCells(key){
 }
 
 function upAction(){
-	for(var i=0;i<4;i++){
+	for(var i=1;i<4;i++){
 		for(var j=0;j<4;j++){
 			if(cells[i][j]){				
 				moveCell(i,j,cells[i][j],-1,1,0);	
@@ -121,7 +116,7 @@ function upAction(){
 }
 
 function downAction(){
-	for(var i=3;i>=0;i--){
+	for(var i=2;i>=0;i--){
 		for(var j=0;j<4;j++){
 			if(cells[i][j]){				
 				moveCell(i,j,cells[i][j],+1,1,3);	
@@ -131,7 +126,7 @@ function downAction(){
 }
 
 function leftAction(){
-	for(var j=0;j<4;j++){
+	for(var j=1;j<4;j++){
 		for(var i=0;i<4;i++){
 			if(cells[i][j]){				
 				moveCell(i,j,cells[i][j],-1,2,0);
@@ -141,7 +136,7 @@ function leftAction(){
 }
 
 function rightAction(){
-	for(var j=3;j>=0;j--){
+	for(var j=2;j>=0;j--){
 		for(var i=0;i<4;i++){
 			if(cells[i][j]){				
 				moveCell(i,j,cells[i][j],+1,2,3);
@@ -157,17 +152,15 @@ function moveCell(i,j,temp,offset,type,end){
 	var startI = i;
 	var startJ = j;
 	var endI = i;
-	var endJ = j;
-	var addflag;
+	var endJ = j;	
 	if(type==1){
-		addflag = false;	
 		while(i!=end){
 			i+=offset;
 			n = cells[i][j];
 			if(n){
-				if( n==temp && !addflag){
+				if( n==temp && !addflag[i][j]){
 					temp += n;
-					addflag=true;
+					addflag[i][j]=true;					
 					cells[i-offset][j]=null;
 					cells[i][j]=temp;
 					score+=temp;
@@ -190,14 +183,13 @@ function moveCell(i,j,temp,offset,type,end){
 			}
 		}	
 	}else if (type==2) {
-		addflag = false;
 		while(j!=end){
 			j+=offset;
 			n = cells[i][j];
 			if(n){
-				if( n==temp && !addflag){
+				if( n==temp && !addflag[i][j]){
 					temp += n;
-					addflag=true;	
+					addflag[i][j]=true;	
 					cells[i][j-offset]=null;			
 					cells[i][j]=temp;	
 					score+=temp;	
