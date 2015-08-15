@@ -125,11 +125,3 @@ function updateNumberCells(){
 		}
 	}
 }
-
-function isOver(){
-	if(nospace()&&cannotMove()){
-		overFlag = true;
-		return true;
-	}
-	return false;
-}

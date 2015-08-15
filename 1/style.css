@@ -72,10 +72,7 @@ body{
 
 .over{
 	display: none;
-	width: 250px;
-	height:250px;
 	margin: 0 auto;
-	padding:125px 125px 125px 125px;
 	background-color:#ccc0b3;
 	text-align: center;
 	border:1px solid #666666;
