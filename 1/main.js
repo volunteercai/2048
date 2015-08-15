@@ -10,10 +10,12 @@ $(function(){
 	$(document).keydown(function(event){
 		if(event.keyCode==38||event.keyCode==40||event.keyCode==37||event.keyCode==39){
 			changeCells(event.keyCode);
-			updateNumberCells();
-			randomOneNumber();
-			$('#score').text(score);
-			return false;
+			setTimeout(function(){
+				updateNumberCells();
+				randomOneNumber();
+				$('#score').text(score);
+				//return false;
+			},40);
 		}
 	});
 });
@@ -52,13 +54,6 @@ function updateNumberCells(){
 				if(number>=1024){
 					$('#number-cell-'+i+'-'+j).css('font-size','40px');
 				}
-			}else{
-				$('#game-pane').append('<div class="number-cell" id="number-cell-'+i+'-'+j+'"></div>');
-				$('#number-cell-'+i+'-'+j)
-						 .css('width','1px')
-						 .css('height','1px')
-						 .css('left',getLeft(j)+50)
-						 .css('top',getTop(i)+50);
 			}
 		}
 	}

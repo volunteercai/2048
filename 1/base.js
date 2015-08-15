@@ -69,17 +69,17 @@ function hasNumber(i,j){
 }
 
 function popShowCell(i,j,number){
+	$('#game-pane').append('<div class="number-cell" id="number-cell-'+i+'-'+j+'"></div>');
 	$('#number-cell-'+i+'-'+j)
-	.css('background-color',getBgColor(number))
-	.css('color',getNumberColor(number))
-	.animate({
-		width:'100px',
-		height:'100px',
-		left:getLeft(j),
-		top:getTop(i)
-	},50,function(){
-		$(this).text(number);
-	});
+						 .css('width','100px')
+						 .css('height','100px')
+						 .css('left',getLeft(j))
+						 .css('top',getTop(i))
+						 .css('background-color',getBgColor(number))
+					     .css('color',getNumberColor(number))
+					     .css('display','none')
+					     .text(number);
+	$('#number-cell-'+i+'-'+j).fadeIn(500);
 }
 
 function getIbyId(id){
@@ -145,6 +145,10 @@ function rightAction(){
 type = 1;上下type = 2;左右
 */
 function moveCell(i,j,temp,offset,type,end){
+	var startI = i;
+	var startJ = j;
+	var endI = i;
+	var endJ = j;
 	var addflag;
 	if(type==1){
 		addflag = false;	
@@ -158,14 +162,22 @@ function moveCell(i,j,temp,offset,type,end){
 					cells[i-offset][j]=null;
 					cells[i][j]=temp;
 					score+=temp;
+					endI = i;
+					endJ = j;
 					break;	
-				}else{			
+				}else{
+					endI = i-offset;
+					endJ = j;			
 					break;
 				}
 			}else{
 				cells[i-offset][j]=null;
 				cells[i][j]=temp;
-				continue;
+				if(i==end){
+					endI = i-offset;
+					endJ = j;
+					break;
+				}
 			}
 		}	
 	}else if (type==2) {
@@ -179,17 +191,32 @@ function moveCell(i,j,temp,offset,type,end){
 					addflag=true;	
 					cells[i][j-offset]=null;			
 					cells[i][j]=temp;	
-					score+=temp;				
+					score+=temp;	
+					endI = i;
+					endJ = j;			
 					break;	
-				}else{			
+				}else{	
+					endI = i;
+					endJ = j-offset;		
 					break;
 				}
 			}else{
 				cells[i][j-offset]=null;
 				cells[i][j]=temp;
-				continue;
+				if(j==end){
+					endI = i;
+					endJ = j-offset;
+					break;
+				}
 			}
 		}	
+	}
+	//移动的动画
+	if(!(startI==endI&&startJ==endJ)){
+		$('#number-cell-'+startI+'-'+startJ).animate({
+			left:getLeft(endJ),
+			top:getTop(endI)
+		},50);	
 	}
 	if(!addflag&&nospace()){
 		if(!overFlag){
