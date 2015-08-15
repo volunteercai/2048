@@ -44,10 +44,10 @@ function randomOneNumber(){
 	if(nospace()){
 		return false;
 	}
-	var count = 0;	
+	var count = 20;	
 	do{
 		//生成两个0-3的随机数
-		var i = Math.floor(Math.random()*4);
+		var i = Math.floor(Math.random()*count%4);
 		var j = Math.floor(Math.random()*4);
 		//判断这个位置是否可用
 		if(!hasNumber(i,j)){
@@ -55,13 +55,13 @@ function randomOneNumber(){
 			popShowCell(i,j,cells[i][j]);
 			return true;
 		}
-		count++;
-	}while(count!=50);
+		count--;
+	}while(count!=0);
 	for(i=0;i<4;i++)
 		for(j=0;j<4;j++)
 			if(!cells[i][j]){
 				cells[i][j]=Math.random()<0.5 ? 2:4;
-				popShowCell(i,j,cells[i][j]);
+				popShowCell(i,j,cells[i][j]);				
 				return true;
 			}
 	return false;
@@ -76,6 +76,18 @@ function nospace(){
 		}
 	}
 	return true;
+}
+
+function countNull(){
+	var count=0;
+	for(var i=0;i<4;i++){
+		for(var j=0;j<4;j++){
+			if(!cells[i][j]){
+				count++;				
+			}
+		}
+	}
+	return count;
 }
 
 function hasNumber(i,j){
