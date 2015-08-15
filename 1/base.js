@@ -1,13 +1,21 @@
 var cells = new Array(4);
 var score = 0;
 var overFlag = false;
+var dw = window.screen.availWidth;
+var paneWidth = dw*0.92;
+var cellWidth = dw*0.18;
+var cellPadding = dw*0.04;
+var startX;
+var startY;
+var endX;
+var endY;
 
 function getLeft(j){
-	return 120*j+20+'px';
+	return (cellWidth+cellPadding)*j+cellPadding+'px';
 }
 
 function getTop(i){
-	return 120*i+20+'px';
+	return (cellWidth+cellPadding)*i+cellPadding+'px';
 }
 
 function getBgColor(number){
@@ -71,17 +79,16 @@ function hasNumber(i,j){
 function popShowCell(i,j,number){
 	$('#game-pane').append('<div class="number-cell" id="number-cell-'+i+'-'+j+'"></div>');
 	$('#number-cell-'+i+'-'+j)
-						 .css('width','100px')
-						 .css('height','100px')
+						 .css('width',cellWidth+'px')
+						 .css('height',cellWidth+'px')
 						 .css('left',getLeft(j))
 						 .css('top',getTop(i))
+						 .css('line-height',cellWidth+'px')
 						 .css('background-color',getBgColor(number))
 					     .css('color',getNumberColor(number))
 					     .css('display','none')
 					     .text(number);
-	setTimeout(function(){
-		$('#number-cell-'+i+'-'+j).fadeIn(500);
-	},50);
+	$('#number-cell-'+i+'-'+j).show(300);
 }
 
 function getIbyId(id){
@@ -218,12 +225,43 @@ function moveCell(i,j,temp,offset,type,end){
 		$('#number-cell-'+startI+'-'+startJ).animate({
 			left:getLeft(endJ),
 			top:getTop(endI)
-		},50);	
+		},100);	
 	}
-	if(!addflag&&nospace()){
-		if(!overFlag){
-			overFlag=true;
-			alert('游戏结束'+score);
+}
+
+function cannotMove(){
+	for(var i=0;i<4;i++){
+		for(var j=0;j<4;j++){
+			if(cells[i][j]){
+				if(canMove(i,j)){
+					return false;
+				}
+			}
 		}
+	}		
+	return true;
+}
+
+function showOver(){
+	$('#game-pane').append('<div class="over"><p>游戏结束</p><a href="javascript:newGame();">重新开始</a><p>你的分数是:'+score+'</p></div>');
+	setTimeout(function(){
+		$('#game-pane .over').css('opacity','0.7').fadeIn(800);
+	},300);
+}
+
+function canMove(i,j){
+	//上下左右判断是否有同值
+	if(i!=3&&cells[i+1][j]==cells[i][j]){
+		return true;
 	}
+	if(i!=0&&cells[i-1][j]==cells[i][j]){
+		return true;
+	}
+	if(j!=3&&cells[i][j+1]==cells[i][j]){
+		return true;
+	}
+	if(j!=0&&cells[i][j-1]==cells[i][j]){
+		return true;
+	}
+	return false;
 }
