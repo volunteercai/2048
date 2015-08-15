@@ -13,11 +13,14 @@ $(function(){
 		startX = event.touches[0].pageX;
 		startY = event.touches[0].pageY;		
 	});
+	document.addEventListener('touchmove',function(event){
+		event.preventDefault();
+	});
 	document.addEventListener('touchend',function(event){
 		endX = event.changedTouches[0].pageX;
 		endY = event.changedTouches[0].pageY;
 
-		if(Math.abs(endX-startX)>dw*0.3||Math.abs(endY-startY)>dw*0.3){
+		if(Math.abs(endX-startX)>dw*0.2||Math.abs(endY-startY)>dw*0.2){
 			if(Math.abs(endX-startX)>Math.abs(endY-startY)){
 				//左右
 				if(endX-startX>0){
@@ -38,7 +41,6 @@ $(function(){
 				}
 			}
 		}
-		return false;
 	});
 });
 
