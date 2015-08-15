@@ -11,8 +11,7 @@ $(function(){
 	});
 	document.addEventListener('touchstart',function(event){
 		startX = event.touches[0].pageX;
-		startY = event.touches[0].pageY;
-		return false;
+		startY = event.touches[0].pageY;		
 	});
 	document.addEventListener('touchend',function(event){
 		endX = event.changedTouches[0].pageX;
@@ -39,6 +38,7 @@ $(function(){
 				}
 			}
 		}
+		return false;
 	});
 });
 
