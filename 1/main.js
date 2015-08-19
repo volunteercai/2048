@@ -1,3 +1,4 @@
+
 $(function(){
 	preGame();
 	newGame();
@@ -63,10 +64,10 @@ function preGame(){
 		cellPadding = 20;
 		cellWidth = 100;
 	}	
-	$('#game-pane').css({'width':paneWidth-2*cellPadding,'height':paneWidth-2*cellPadding,'padding':cellPadding});
+	gamePane.css({'width':paneWidth-2*cellPadding,'height':paneWidth-2*cellPadding,'padding':cellPadding});
 	for(var i=0;i<4;i++){
 		for(var j=0;j<4;j++){
-			$('#game-pane').append('<div class="cell" id="cell-'+i+'-'+j+'"></div>');
+			gamePane.append('<div class="cell" id="cell-'+i+'-'+j+'"></div>');
 			$('#cell-'+i+'-'+j)
 							  .css('width',cellWidth)
 							  .css('height',cellWidth)
@@ -99,7 +100,7 @@ function updateNumberCells(){
 		for(j=0;j<4;j++){
 			if(cells[i][j]){
 				var number = cells[i][j];
-				$('#game-pane').append('<div class="number-cell" id="number-cell-'+i+'-'+j+'"></div>');
+				gamePane.append('<div class="number-cell" id="number-cell-'+i+'-'+j+'"></div>');
 				$('#number-cell-'+i+'-'+j)
 						 .css('width',cellWidth)
 						 .css('height',cellWidth)

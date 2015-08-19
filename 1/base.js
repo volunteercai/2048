@@ -10,6 +10,7 @@ var startY;
 var endX;
 var endY;
 var addflag = new Array(4);
+var gamePane = $('#game-pane');
 
 function getLeft(j){
 	return (cellWidth+cellPadding)*j+cellPadding+'px';
@@ -99,7 +100,7 @@ function hasNumber(i,j){
 }
 
 function popShowCell(i,j,number){
-	$('#game-pane').append('<div class="number-cell" id="number-cell-'+i+'-'+j+'"></div>');
+	gamePane.append('<div class="number-cell" id="number-cell-'+i+'-'+j+'"></div>');
 	$('#number-cell-'+i+'-'+j)
 						 .css('width',cellWidth+'px')
 						 .css('height',cellWidth+'px')
@@ -256,7 +257,7 @@ function cannotMove(){
 }
 
 function showOver(){
-	$('#game-pane').append('<div class="over"><p>游戏结束</p><a href="javascript:newGame();">重新开始</a><p>你的分数是:'+score+'</p></div>');
+	gamePane.append('<div class="over"><p>游戏结束</p><a href="javascript:newGame();">重新开始</a><p>你的分数是:'+score+'</p></div>');
 	$('#game-pane .over').css('opacity','0.7')
 						 .css('width',paneWidth/2)
 						 .css('height',paneWidth/2)
